@@ -1,0 +1,49 @@
+experiment_name: EfficientDetSeg_512_VOC_TRUE_HARD
+
+train:
+  amp: False
+  num_epochs: 100
+  model: 
+    # name: unet
+    # in_channels: 3
+    # num_classes: 21 
+    # weights: null
+    # optimizer_state: null
+
+    name: efficientdet_d4_seg
+    num_classes: 21
+    backbone_pretrained: True
+    weights: experiments/EfficientDetSeg_512_COCO_TRUE_HARD/model_2.pth
+    optimizer_state: null 
+
+  optimizer:
+    _target_: torch.optim.AdamW
+    lr: 7e-5
+    weight_decay: 1e-5
+
+  scheduler:
+    _target_: torch.optim.lr_scheduler.ExponentialLR
+    # gamma: 0.985 # final_lr = lr * 0.01 (300 epoch)
+    gamma: 0.975 # final_lr = lr * 0.0795 (100 epoch)
+    # gamma: 0.925 # final_lr = lr * 0.0964 (30 epoch)
+    last_epoch: -1
+
+  loss:
+    accumulation_iter: 2 # Gradient accumulation
+    distribution:
+      _target_: torch.nn.CrossEntropyLoss
+      ignore_index: 21 # Boundary ignore for Pascal VOC only
+    region:
+      _target_: core.loss.SegmentationLoss
+      loss_type: iou
+
+validation:
+  epoch_step: 1 # Validation process every {epoch_step} epoch
+
+data:
+  preprocessing:
+    resize_height: 512
+    resize_width: 512
+    resize_mask_height: 512
+    resize_mask_width: 512
+  batch_size: 4

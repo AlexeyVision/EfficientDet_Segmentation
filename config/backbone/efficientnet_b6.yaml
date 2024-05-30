@@ -1,0 +1,73 @@
+name: efficientnet_b6
+
+param:
+  width_multiplier: 1.8
+  depth_multiplier: 2.6
+  drop_connect_rate: 0.2
+  in_channels: 3
+  batch_norm:
+    eps: 0.001
+    momentum: 0.01
+
+classifier:
+  num_features: 1280
+  num_classes: 1000
+  dropout: 0.5
+
+stages:
+  stage_1:
+    in_channels: 32
+    out_channels: 16
+    kernel_size: 3
+    stride: 1
+    expansion_rate: 1
+    se_rate: 0.25
+    repeats: 1
+  stage_2:
+    in_channels: 16
+    out_channels: 24
+    kernel_size: 3
+    stride: 2
+    expansion_rate: 6
+    se_rate: 0.25
+    repeats: 2
+  stage_3:
+    in_channels: 24
+    out_channels: 40
+    kernel_size: 5
+    stride: 2
+    expansion_rate: 6
+    se_rate: 0.25
+    repeats: 2
+  stage_4:
+    in_channels: 40
+    out_channels: 80
+    kernel_size: 3
+    stride: 2
+    expansion_rate: 6
+    se_rate: 0.25
+    repeats: 3
+  stage_5:
+    in_channels: 80
+    out_channels: 112
+    kernel_size: 5
+    stride: 1
+    expansion_rate: 6
+    se_rate: 0.25
+    repeats: 3
+  stage_6:
+    in_channels: 112
+    out_channels: 192
+    kernel_size: 5
+    stride: 2
+    expansion_rate: 6
+    se_rate: 0.25
+    repeats: 4
+  stage_7:
+    in_channels: 192
+    out_channels: 320
+    kernel_size: 3
+    stride: 1
+    expansion_rate: 6
+    se_rate: 0.25
+    repeats: 1

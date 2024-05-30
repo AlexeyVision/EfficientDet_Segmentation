@@ -1,0 +1,55 @@
+name: unet
+
+param:
+  batch_norm:
+    eps: 0.001
+    momentum: 0.01
+
+encoder:
+  stage_1:
+    in_channels: 3
+    out_channels: 64
+    kernel_size: 3
+  stage_2:
+    in_channels: 64
+    out_channels: 128
+    kernel_size: 3
+  stage_3:
+    in_channels: 128
+    out_channels: 256
+    kernel_size: 3
+  stage_4:
+    in_channels: 256
+    out_channels: 512
+    kernel_size: 3
+
+bottleneck:
+  in_channels: 512
+  out_channels: 1024
+  kernel_size: 3
+
+decoder:
+  stage_1:
+    in_channels: 1024
+    out_channels: 512
+    kernel_size: 3
+    deconv_kernel_size: 2
+  stage_2:
+    in_channels: 512
+    out_channels: 256
+    kernel_size: 3
+    deconv_kernel_size: 2
+  stage_3:
+    in_channels: 256
+    out_channels: 128
+    kernel_size: 3
+    deconv_kernel_size: 2
+  stage_4:
+    in_channels: 128
+    out_channels: 64
+    kernel_size: 3
+    deconv_kernel_size: 2
+
+classifier:
+    in_channels: 64
+    num_classes: 100

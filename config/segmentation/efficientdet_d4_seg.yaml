@@ -1,0 +1,38 @@
+name: efficientdet_d4_seg
+
+# Model parameters
+param:
+  batch_norm:
+    eps: 0.001
+    momentum: 0.01
+
+# EfficientNet as backbone
+backbone:
+  name: efficientnet_b4
+  pretrained: True
+  weights: null
+  required_levels: [2, 3, 4]
+
+# BiFPN
+neck:
+  # P2 -> P3 -> P4 -> P5 (create) -> P6 (create)
+  # Note: required_levels: [2, 3, 4]
+  input_channel_sizes: [32, 56, 160] 
+
+  # P3 -> P4 -> P5 -> P6 (create) -> P7 (create)
+  # Note: required_levels: [3, 4, 5]
+  # input_channel_sizes: [56, 160, 448]
+
+  num_channels: 128
+  num_layers: 3
+
+# Segmentation Head using P2 output only
+head:
+  num_channels: 256
+  num_classes: 100
+  num_layers: 3
+
+# Segmentation Head using FPN with [P3, ..., P7] outputs
+# headFPN:
+#   num_channels: 256
+#   num_classes: 100
