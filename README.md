@@ -37,7 +37,7 @@ Classification:
 ## Results
 | Model   		      		                         | Dataset 	          | Input size <br> <sub> (pixel)   | Output size <br> <sub> (pixel)  | mIoU <br> <sub> 
 | :---:   		      		                         | :---:   	          | :---:    	                      | :---: 		                      | :---: 
-| Modified EfficientDet D4 <br> <sub> (Ours⭐)   | Pascal VOC 2012   | 512 x 512       	              | 512 x 512     	  	            | 71.90
+| Modified EfficientDet D4 <br> <sub> (Ours⭐)   | Pascal VOC 2012   | 512 x 512       	              | 512 x 512     	  	            | 81.20
 | Modified EfficientDet D4 <br> <sub> (Paper)  	 | Pascal VOC 2012    | Not specify       	      	    | Not specify    	                | 81.74
 
 ## Training
